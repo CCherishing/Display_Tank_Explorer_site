@@ -1,0 +1,28 @@
+body {
+    margin: 0;
+    font-family: sans-serif;
+}
+
+.app {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    height: 100vh;
+}
+
+#seaGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 16px;
+    padding: 16px;
+    background: #0b3d5c;
+}
+
+#seaGrid img {
+    width: 100%;
+    cursor: pointer;
+}
+
+#infoPanel {
+    padding: 16px;
+    background: #f4f8fb;
+}
