@@ -73,7 +73,7 @@ function showModal(s) {
         console.log('showModal: no image fields, using placeholder');
     }
     // set modal image (use placeholder if no large image)
-    modalImage.src = src;
+    modalImage.src = photoName ? new URL(`images/${photoName}`, location.href).href : 'images/placeholder.png';
     modalImage.alt = s.common_name || s.name || "creature image";
 
     overlay.classList.remove("hidden");
