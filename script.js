@@ -48,7 +48,6 @@ function loadInfo(id) {
             alert("Could not load details for that creature.");
         });
 }
-
 function showModal(s) {
     // Title and text
     modalTitle.textContent = s.common_name || s.name || "Unknown";
@@ -56,14 +55,25 @@ function showModal(s) {
     modalHabitat.textContent = s.habitat_info ? `Habitat: ${s.habitat_info}` : "";
     modalFunFact.textContent = s.fun_fact ? `Fun fact: ${s.fun_fact}` : "";
 
+    // prefer the large image field(s), strip any "sprites/" prefix if present
+    const photoRaw = s.s_image || s.image || s.p_image || s.photo || '';
+    const photoName = photoRaw ? photoRaw.replace(/^\/?sprites\//, '') : '';
     // Sprite vs. popup image selection:
     // - spriteName is used for the small grid image (already set when creating grid)
     // - photoName is used for the modal / popup (larger, more detailed image)
-    const spriteName = s.sprite || s.s_image || "";      // small sprite filename
-    const photoName = s.image || s.p_image || s.photo || ""; // popup / large filename
-
+    let src;
+    if (photoName) {
+        src = `images/${photoName}`;
+        console.log('showModal: using large image ->', src);
+    } else if (s.sprite) {
+        src = `images/${s.sprite}`;
+        console.log('showModal: no large image, falling back to sprite ->', src);
+    } else {
+        src = 'images/placeholder.png';
+        console.log('showModal: no image fields, using placeholder');
+    }
     // set modal image (use placeholder if no large image)
-    modalImage.src = photoName ? `images/${photoName}` : `images/placeholder.png`;
+    modalImage.src = src;
     modalImage.alt = s.common_name || s.name || "creature image";
 
     overlay.classList.remove("hidden");
