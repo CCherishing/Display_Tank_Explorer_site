@@ -50,15 +50,21 @@ function loadInfo(id) {
 }
 
 function showModal(s) {
-    // Safely set text content
+    // Title and text
     modalTitle.textContent = s.common_name || s.name || "Unknown";
     modalDescription.textContent = s.description || "";
     modalHabitat.textContent = s.habitat_info ? `Habitat: ${s.habitat_info}` : "";
     modalFunFact.textContent = s.fun_fact ? `Fun fact: ${s.fun_fact}` : "";
 
-    const spriteName = s.sprite || s.s_image || s.image || "";
-    modalImage.src = spriteName ? `images/${spriteName}` : `images/placeholder.png`;
-    modalImage.alt = s.common_name || "creature image";
+    // Sprite vs. popup image selection:
+    // - spriteName is used for the small grid image (already set when creating grid)
+    // - photoName is used for the modal / popup (larger, more detailed image)
+    const spriteName = s.sprite || s.s_image || "";      // small sprite filename
+    const photoName = s.image || s.p_image || s.photo || ""; // popup / large filename
+
+    // set modal image (use placeholder if no large image)
+    modalImage.src = photoName ? `images/${photoName}` : `images/placeholder.png`;
+    modalImage.alt = s.common_name || s.name || "creature image";
 
     overlay.classList.remove("hidden");
     modalClose.focus();
