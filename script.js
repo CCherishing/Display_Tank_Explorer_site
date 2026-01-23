@@ -48,6 +48,7 @@ function loadInfo(id) {
             alert("Could not load details for that creature.");
         });
 }
+
 function showModal(s) {
     // Title and text
     modalTitle.textContent = s.common_name || s.name || "Unknown";
@@ -57,24 +58,47 @@ function showModal(s) {
 
     // prefer the large image field(s), strip any "sprites/" prefix if present
     const photoRaw = s.s_image || s.image || s.p_image || s.photo || '';
-    const photoName = photoRaw ? photoRaw.replace(/^\/?sprites\//, '') : '';
+    const photoName = photoRaw ? photoRaw.replace(/^\/?(sprites|species_images)\//, '') : '';
+
     // Sprite vs. popup image selection:
     // - spriteName is used for the small grid image (already set when creating grid)
     // - photoName is used for the modal / popup (larger, more detailed image)
     let src;
     if (photoName) {
-        src = `images/${photoName}`;
+        // use the species_images folder for large modal photos
+        src = new URL(`images/species_images/${photoName}`, location.href).href;
         console.log('showModal: using large image ->', src);
     } else if (s.sprite) {
-        src = `images/${s.sprite}`;
+        // fall back to the sprite found in the sprites folder
+        const spriteName = (s.sprite || '').replace(/^\/?(sprites|species_images)\//, '');
+        src = new URL(`images/sprites/${spriteName}`, location.href).href;
         console.log('showModal: no large image, falling back to sprite ->', src);
     } else {
-        src = 'images/placeholder.png';
+        // inline SVG placeholder (avoids additional file uploads)
+        src = 'data:image/svg+xml;utf8,' + encodeURIComponent(
+            `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400">
+              <rect width="100%" height="100%" fill="#f4f8fb"/>
+              <text x="50%" y="50%" font-size="20" text-anchor="middle" dominant-baseline="middle" fill="#333">No image available</text>
+            </svg>`
+        );
         console.log('showModal: no image fields, using placeholder');
     }
-    // set modal image (use placeholder if no large image)
-    modalImage.src = photoName ? new URL(`images/${photoName}`, location.href).href : 'images/placeholder.png';
+
+    // set modal image (use resolved absolute URL so path resolution is robust)
+    modalImage.src = src;
     modalImage.alt = s.common_name || s.name || "creature image";
+
+    // fallback to inline placeholder if the chosen image 404s
+    modalImage.onerror = () => {
+        console.warn('modalImage load failed, falling back to inline placeholder:', modalImage.src);
+        modalImage.onerror = null;
+        modalImage.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(
+            `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400">
+          <rect width="100%" height="100%" fill="#f4f8fb"/>
+          <text x="50%" y="50%" font-size="20" text-anchor="middle" dominant-baseline="middle" fill="#333">No image available</text>
+        </svg>`
+        );
+    };
 
     overlay.classList.remove("hidden");
     modalClose.focus();
