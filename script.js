@@ -26,6 +26,12 @@ fetch(`${API_URL}/species`)
             img.alt = s.common_name || s.name || "creature";
             img.dataset.id = s.id; // keep id for detail fetch
             img.addEventListener("click", () => loadInfo(s.id));
+
+            const x = typeof s.x === "number" ? s.x : parseFloat(s.x || "0");
+            const y = typeof s.y === "number" ? s.y : parseFloat(s.y || "0");
+            img.style.left = `${x}%`;
+            img.style.top = `${y}%`;
+
             grid.appendChild(img);
         });
     })
