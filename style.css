@@ -19,7 +19,7 @@ body {
     /* keep if you like, or set to 0 once sprites are positioned */
 
     /* Default tank background image */
-    background-image: url("images/tank_bg.png");
+    background-image: url("data/game_background.png");
     /* change filename if needed */
     background-size: cover;
     background-position: center;
