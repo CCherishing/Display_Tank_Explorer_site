@@ -46,10 +46,6 @@ body {
     pointer-events: auto;
 }
 
-#seaGrid img:hover {
-    transform: scale(1.05);
-}
-
 #infoPanel {
     padding: 16px;
     background: #f4f8fb;
