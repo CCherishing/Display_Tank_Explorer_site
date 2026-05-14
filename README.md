@@ -1,5 +1,5 @@
 Display Tank Explorer - Frontend
-This repository contains the frontend client for Display Tank Explorer. This page creates the UI and interactions and simply takes info from the backend.
+This repository contains the frontend client for Display Tank Explorer. This page creates the UI and interactions and simply takes info from the backend. All primary instructions are on backend readme. 
 
 There is nothing to edit or configure on the frontend to make it connect, as it relies entirely on the Python Backend API to function.
 
