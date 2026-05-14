@@ -5,7 +5,7 @@ body {
 
 .app {
     display: grid;
-    grid-template-columns: 3fr 1fr;
+    grid-template-columns: 1fr;
     height: 100vh;
 }
 
@@ -44,11 +44,6 @@ body {
     object-fit: contain;
     /* keep full sprite visible without distortion */
     pointer-events: auto;
-}
-
-#infoPanel {
-    padding: 16px;
-    background: #f4f8fb;
 }
 
 /* Modal styles */
