@@ -4,8 +4,7 @@ body {
 }
 
 .app {
-    display: grid;
-    grid-template-columns: 1fr;
+    display: block;
     height: 100vh;
 }
 
@@ -15,6 +14,7 @@ body {
     position: relative;
     width: 100%;
     height: 100%;
+    box-sizing: border-box;
     overflow: hidden;
     padding: 16px;
     /* keep if you like, or set to 0 once sprites are positioned */
