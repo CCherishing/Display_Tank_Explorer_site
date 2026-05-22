@@ -6,5 +6,5 @@ There is nothing to edit or configure on the frontend to make it connect, as it 
 Currently, the working branches are site_test and api_test. Neither have been merged into main just yet. 
 
 Known Issues:
-The green crab image is asian short crab. 
+The green crab image is asian shore crab. 
 
